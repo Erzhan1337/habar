@@ -6,12 +6,13 @@ import (
 	"beverage-classifier/internal/db"
 	"log"
 	"os"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-
 	database, err := db.Connect()
 	if err != nil {
 		log.Fatal(err)
@@ -24,7 +25,6 @@ func main() {
 		&internal.Nutrition{},
 		&internal.Flag{},
 	)
-
 	if err != nil {
 		log.Fatal("Migration failed:", err)
 	}
@@ -33,6 +33,14 @@ func main() {
 	}
 
 	router := gin.Default()
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173", "http://localhost:3000"},
+		AllowMethods:     []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
 	internal.RegisterHandlers(router, database)
 
 	port := os.Getenv("PORT")
@@ -44,5 +52,4 @@ func main() {
 	if err := router.Run(":" + port); err != nil {
 		log.Fatal(err)
 	}
-
 }
