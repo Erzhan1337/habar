@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import {ReactNode} from "react";
+import { ReactNode } from "react";
+import { Sidebar } from "@/shared/layouts/Sidebar";
+import { Header } from "@/shared/layouts/Header";
 
 const inter = Inter({
-  subsets: ["latin","cyrillic"],
+  subsets: ["latin", "cyrillic"],
 });
 
 export const metadata: Metadata = {
@@ -19,10 +21,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} antialiased`}
-      >
-        {children}
+      <body className={`${inter.className} antialiased flex`}>
+        <Sidebar />
+        <div className="flex flex-col flex-1 min-w-0">
+          <Header />
+          <main className="flex-1 overflow-y-auto bg-[#F8F9FA]">
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );
