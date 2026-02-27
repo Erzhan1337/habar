@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { cn } from "@/shared/lib/utils";
 
-export const Card = ({ children }: { children: ReactNode }) => {
+export const CardInfo = ({ children }: { children: ReactNode }) => {
   return (
     <div className="rounded-lg h-36 shadow-lg border-2 border-gray-200 p-4">
       {children}
@@ -9,7 +9,7 @@ export const Card = ({ children }: { children: ReactNode }) => {
   );
 };
 
-Card.Header = function CardHeader({
+CardInfo.Header = function CardHeader({
   title,
   icon,
 }: {
@@ -24,11 +24,11 @@ Card.Header = function CardHeader({
   );
 };
 
-Card.Value = function CardValue({ children }: { children: ReactNode }) {
+CardInfo.Value = function CardValue({ children }: { children: ReactNode }) {
   return <div className="text-2xl font-semibold mt-4">{children}</div>;
 };
 
-Card.Footer = function CardFooter({
+CardInfo.Footer = function CardFooter({
   children,
   className,
 }: {
